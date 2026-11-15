@@ -3,20 +3,22 @@ import React, { useEffect, useState } from 'react'
 import RecipeCard from '../components/RecipeCard'
 import { Link, useNavigate } from 'react-router-dom'
 import NotFound from './NotFound'
+import useLoading from '../hooks/useLoading'
 
 
 function Home() {
 
     const [recipes, setRecipes] = useState([])
     const [total, setTotal] = useState(0)
-    const [loading, setLoading] = useState(true)
+    // const [loading, setLoading] = useState(true)
+    const {loading , startLoading , stopLoading} = useLoading()
     const [errorMsg, setErrorMsg] = useState("")
     const [searchQuery, setSearchQuery] = useState("")
-    const navigate = useNavigate();
 
 
     async function fetchRecipes(skipCount, query) {
-        setLoading(true)
+        // setLoading(true)
+        startLoading()
         try {
             let url = `https://dummyjson.com/recipes?limit=9&skip=${skipCount}`
 
@@ -33,7 +35,8 @@ function Home() {
             console.log(error)
             setErrorMsg("Please try again later")
         }
-        setLoading(false)
+        // setLoading(false)
+        stopLoading()
     }
 
     useEffect(() => {
